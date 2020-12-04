@@ -32,6 +32,7 @@ void part1(vector<int> res) {
       if (res.at(j)==target)
       {
         cout << res.at(i) * res.at(j) << "\n";
+        return;
       }
     }
   }
@@ -50,6 +51,7 @@ void part2(vector<int> res) {
         if (res.at(k)==target2)
         {
           cout << res.at(i) * res.at(j) * res.at(k) << "\n";
+          return;
         }
       }
     }

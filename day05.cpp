@@ -7,22 +7,6 @@
 
 using namespace std;
 
-vector<string> read_data(string day_num){
-
-    ifstream ip("inputs/data" + day_num + ".txt");
-    vector<string> result;
-    string line;
-
-    while (getline(ip, line)) {
-      result.push_back(line);
-    }
-
-    ip.close();
-    
-    return result;
-}
-
-
 class Seat {
   private:
     int str_to_row(string seat_str);
@@ -33,6 +17,22 @@ class Seat {
     int col;
     int seat_id;
 };
+
+
+vector<Seat> read_data(string day_num){
+
+    ifstream ip("inputs/data" + day_num + ".txt");
+    vector<Seat> result;
+    string seat_str;
+
+    while (getline(ip, seat_str)) {
+      result.push_back(Seat(seat_str));
+    }
+
+    ip.close();
+    
+    return result;
+}
 
 
 Seat::Seat(string s) {
@@ -102,13 +102,8 @@ void test() {
 
 int main()
 {
-  vector<string> seats = read_data("05");
-  vector<Seat> seat_vec;
-  for (string seat_str : seats) {
-    Seat s(seat_str);
-    seat_vec.push_back(s);
-  }
-  cout << part1(seat_vec) << "\n";
-  cout << part2(seat_vec) << "\n";
+  vector<Seat> seats = read_data("05");
+  cout << part1(seats) << "\n";
+  cout << part2(seats) << "\n";
   return 0;
 }

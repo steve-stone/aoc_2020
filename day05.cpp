@@ -10,7 +10,6 @@ using namespace std;
 vector<string> read_data(string day_num){
 
     ifstream ip("inputs/data" + day_num + ".txt");
-
     vector<string> result;
     string line;
 
@@ -47,38 +46,27 @@ Seat::Seat(string s) {
   seat_id = row * 8 + col;
 }
 
-int Seat::str_to_row(string x) {
-  int low = 0;
-  int high = 127;
-  float mid = (float)(high - low) / 2.0;
-  for (char c : x.substr(0,7)) {
-    //cout << low << '-' << high << ' ' << mid << ',' << c << "\n";
-    if (c == 'F')
-      high = (int)(mid - 0.5);
-    if (c == 'B')
-      low = (int)(mid + 0.5);
-    mid = (float)(low) + (float)(high - low) / 2.0;
 
+int search(string dirs, int low, int high, char down, char up) {  
+  float mid;
+  for (char c : dirs) {
+    mid = (float)(low) + (float)(high - low) / 2.0;
+    if (c == down)
+      high = (int)(mid - 0.5);
+    if (c == up)
+      low = (int)(mid + 0.5);
   }
   assert(low==high);
   return low;
 }
 
-int Seat::str_to_col(string x) {
-  int low = 0;
-  int high = 7;
-  float mid = (float)(high - low) / 2.0;
-  for (char c : x.substr(7,10)) {
-    //cout << low << '-' << high << ' ' << mid << ',' << c << "\n";
-    if (c == 'L')
-      high = (int)(mid - 0.5);
-    if (c == 'R')
-      low = (int)(mid + 0.5);
-    mid = (float)(low) + (float)(high - low) / 2.0;
 
-  }
-  assert(low==high);
-  return low;
+int Seat::str_to_row(string x) {
+  return search(x.substr(0,7), 0, 127, 'F', 'B');
+}
+
+int Seat::str_to_col(string x) {
+  return search(x.substr(7,10), 0, 7, 'L', 'R');
 }
 
 int part1(vector<Seat> vec) {

@@ -45,7 +45,7 @@ int part1(vector<string> res, int moves_right, int moves_down) {
 
 
 void part2(vector<string> res) {
-  int sol = 1;
+  long int sol = 1;
   sol *= part1(res, 1, 1);
   sol *= part1(res, 3, 1);
   sol *= part1(res, 5, 1);

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <regex>
 #include <cassert>
 
 using namespace std;

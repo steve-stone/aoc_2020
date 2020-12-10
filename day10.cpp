@@ -3,10 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <cassert>
-#include <sstream>
 #include <map>
 #include <algorithm>
-#include <iterator>
 #include <functional>
 #include <numeric>
 
@@ -16,10 +14,10 @@ vector<int> read_data(string file){
 
     ifstream ip("inputs/" + file + ".txt");
     vector<int> result;
-    string s;
+    int s;
 
-    while (getline(ip, s)) {
-      result.push_back(stoi(s));
+    while (ip >> s) {
+      result.push_back(s);
     }
 
     ip.close();

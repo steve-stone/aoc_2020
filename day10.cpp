@@ -34,16 +34,9 @@ int part1(vector<int> vec) {
 
   adjacent_difference(vec.begin(), vec.end(), vec.begin());
   
-  int diff1 = 0;
-  int diff3 = 1; // for adaptor to device
+  int diff1 = count(vec.begin(), vec.end(), 1);
+  int diff3 = count(vec.begin(), vec.end(), 3) + 1; // +1 for last adaptor to device
 
-
-  for (int n : vec) {
-    if (n == 1)
-      diff1++;
-    if (n == 3)
-      diff3++;
-  }
   return diff1 * diff3;
 }
 

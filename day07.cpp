@@ -62,15 +62,28 @@ void add_bag_from_str(string x, map<string, vector<pair<string, int>>> &capacity
   
 }
 
-bool search(vector<pair<string, int>> v, string tgt, map<string, vector<pair<string, int>>> cap) {
+map<string, bool> cache;
+
+bool search(string key,
+            vector<pair<string, int>> v,
+            string tgt, 
+            map<string, vector<pair<string, int>>> cap) {
+
+  if ( cache.find(key) != cache.end() ) {
+    return cache[key];
+  }
   for (auto p: v) {
     if (p.first == tgt) {
+      cache[key] = true;
       return true;
     } else {
-      if (search(cap[p.first], tgt, cap))
+      if (search(p.first, cap[p.first], tgt, cap)) {
+        cache[key] = true;
         return true;
+      }
     }
   }
+  cache[key] = false;
   return false;
 }
 
@@ -88,7 +101,7 @@ int part1(vector<string> vec) {
   for (auto it = capacity.begin(); it != capacity.end(); ++it) {
     key = it -> first;
     val = it -> second;
-    if (search(val, "shiny gold", capacity)) {
+    if (search(key, val, "shiny gold", capacity)) {
       count++;
     }
   }

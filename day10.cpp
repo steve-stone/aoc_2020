@@ -57,16 +57,15 @@ long long part2(vector<int> vec) {
   return path_count[vec.back()];
 }
 
-void test() {
-  int sol = part2(read_data("testdata10"));
-  cout << "sol=" << sol << endl;
+int test() {
+  return part2(read_data("testdata10"));
 }
 
 int main()
 {
   vector<int> jolts = read_data("data10");
   cout << part1(jolts) << "\n";
-  //test();
+  assert(test()==19208);
   cout << part2(jolts) << "\n";
   return 0;
 }

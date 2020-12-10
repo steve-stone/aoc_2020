@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iterator>
 #include <functional>
+#include <numeric>
 
 using namespace std;
 
@@ -30,19 +31,18 @@ vector<int> read_data(string file){
 int part1(vector<int> vec) {
   
   sort(vec.begin(), vec.end());
+
+  adjacent_difference(vec.begin(), vec.end(), vec.begin());
+  
   int diff1 = 0;
-  int diff3 = 1; // for device
+  int diff3 = 1; // for adaptor to device
 
-  int last_el = 0;
-  int this_diff;
 
-  for (int i : vec) {
-    this_diff = i - last_el;
-    if (this_diff == 1)
+  for (int n : vec) {
+    if (n == 1)
       diff1++;
-    if (this_diff == 3)
+    if (n == 3)
       diff3++;
-    last_el = i;
   }
   return diff1 * diff3;
 }

@@ -56,11 +56,11 @@ long long part2(vector<int> vec) {
   map<int, long long> path_count;
 
   path_count[vec.at(0)] = 1; // one path from max
+  vec.erase(vec.begin()); // max already added to map, don't have to skip in following loop
 
-  for (vector<int>::iterator it = ++vec.begin(); it != vec.end(); ++it) {
-    path_count[*it] = path_count[*it+1] + path_count[*it+2] + path_count[*it+3];
-  }
-  
+  for (int j : vec)
+    path_count[j] = path_count[j+1] + path_count[j+2] + path_count[j+3];
+    
   return path_count[vec.back()];
 }
 

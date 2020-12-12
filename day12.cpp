@@ -32,12 +32,12 @@ float calc_distance(int x1, int y1, int x2, int y2) {
 }
   
 
-map<int, string> HEADING = {{0,"e"}, {90,"n"}, {180,"w"}, {270,"s"}};
+map<int, char> HEADING = {{0,'E'}, {90,'N'}, {180,'W'}, {270,'S'}};
 
 struct Boat
 {
   int heading_deg;
-  string heading_str; 
+  char heading_str; 
   pair<int, int> waypoint;
   pair<int, int> pos;
   Boat() {
@@ -54,15 +54,9 @@ struct Boat
     } else if (cmd=='L') {
       adjust_heading(val);
     } else if (cmd=='F') {
-      _move(heading_str, val);
-    } else if (cmd=='E') {
-      _move("e", val);
-    } else if (cmd=='N') {
-      _move("n", val);
-    } else if (cmd=='W') {
-      _move("w", val);
-    } else if (cmd=='S') {
-      _move("s", val);
+      _move(pos, heading_str, val);
+    } else if (cmd=='E' || cmd == 'N' || cmd == 'W' || cmd == 'S') {
+      _move(pos, cmd, val);
     }
   }
 
@@ -75,14 +69,8 @@ struct Boat
       rotate_waypoint(val);
     } else if (cmd=='F') {
       waypoint_hop(val);
-    } else if (cmd=='E') {
-      _move_waypoint("e", val);
-    } else if (cmd=='N') {
-      _move_waypoint("n", val);
-    } else if (cmd=='W') {
-      _move_waypoint("w", val);
-    } else if (cmd=='S') {
-      _move_waypoint("s", val);
+    } else if (cmd=='E' || cmd == 'N' || cmd == 'W' || cmd == 'S') {
+      _move(waypoint, cmd, val);
     }
   }
   void display_pos() {
@@ -92,34 +80,20 @@ struct Boat
     pos.first += x * waypoint.first;
     pos.second += x * waypoint.second;
   }
-  void _move(string direction, int amount) {
-    if (direction == "e") {
-      pos.first += amount;
-    } else if (direction == "n") {
-      pos.second += amount;
-    } else if (direction == "w") {
-      pos.first -= amount;
-    } else if (direction == "s") {
-      pos.second -= amount;
-    } else {
-      assert(false);
-    }
-  }
-  void _move_waypoint(string direction, int amount) {
-    if (direction == "e") {
-      waypoint.first += amount;
-    } else if (direction == "n") {
-      waypoint.second += amount;
-    } else if (direction == "w") {
-      waypoint.first -= amount;
-    } else if (direction == "s") {
-      waypoint.second -= amount;
+  void _move(pair<int,int> &p, char direction, int amount) {
+    if (direction == 'E') {
+      p.first += amount;
+    } else if (direction == 'N') {
+      p.second += amount;
+    } else if (direction == 'W') {
+      p.first -= amount;
+    } else if (direction == 'S') {
+      p.second -= amount;
     } else {
       assert(false);
     }
   }
   void rotate_waypoint(int val) {
-    //cout << "way " << waypoint.first << ',' << waypoint.second;
     while (val > 0) {
       // step one anti-clock
       int x = waypoint.first;
@@ -135,16 +109,13 @@ struct Boat
       val += 90;
     }
     assert(val==0);
-    //cout << " -- " << waypoint.first << ',' << waypoint.second << endl;
   }
   void adjust_heading(int val) {
-    //cout << "heading : " << heading_deg << ',' << heading_str;
     heading_deg += val;
     while (heading_deg<0)
       heading_deg += 360;
     heading_deg %= 360;
     heading_str = HEADING[heading_deg];
-    //cout << " -- " << heading_deg << ',' << heading_str << endl;
   }
   int get_distance() { return abs(pos.first) + abs(pos.second); }
 };
@@ -169,13 +140,11 @@ int part2(vector<string> instructions) {
 
 
 void test() {
-  
   vector<string> instructions = read_data("testdata12");
   assert(part1(instructions)==25);
 }
 
 void test2() {
-  
   vector<string> instructions = read_data("testdata12");
   assert(part2(instructions)==286);
 }

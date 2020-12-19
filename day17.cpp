@@ -54,10 +54,6 @@ void extend_x(vector<vector<string>>& state) {
       tmp = '.' + s + '.';
       s = tmp;
     }
-    //string top(state.at(0).at(0), '.');
-    //string bottom(state.at(0).at(0), '.');
-    //v.emplace(v.begin(), top);
-    //v.emplace(v.end(), bottom);
   }
 }
 
